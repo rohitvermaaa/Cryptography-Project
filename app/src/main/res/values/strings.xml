@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Cryptography Project</string>
+    <string name="plaintext">Plaintext</string>
+    <string name="encrypt">Encrypt</string>
+    <string name="your_encrypted_text">Your Encrypted Text</string>
+    <string name="copy_to_clipboard">Copy To Clipboard</string>
+    <string name="ciphertext">Ciphertext</string>
+    <string name="decrypt">Decrypt</string>
+    <string name="your_decrypted_text">Your Decrypted Text</string>
+</resources>
