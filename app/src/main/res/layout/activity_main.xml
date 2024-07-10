@@ -227,6 +227,7 @@
                         android:fontFamily="@font/amiko"
                         android:layout_marginEnd="5dp"
                         android:textColorHint="@color/black"
+                        android:textColor="@color/black"
                         />
                     <ImageButton
                         android:layout_weight="1"

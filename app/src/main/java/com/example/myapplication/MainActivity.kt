@@ -16,22 +16,19 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding!!.root)
 
-//        binding!!.encryptTv.setTextColor(resources.getColor(android.R.color.black))
-//        binding!!.encryptTv.setHintTextColor(resources.getColor(android.R.color.black))
-//        binding!!.decryptTv.setTextColor(resources.getColor(android.R.color.black))
-//        binding!!.decryptTv.setHintTextColor(resources.getColor(android.R.color.black))
-
         binding!!.encryptBtn.setOnClickListener {
-            Toast.makeText(this, "Encrypted", Toast.LENGTH_SHORT).show()
-            binding!!.encryptTextEt.text.clear()
-            binding!!.keyEnEt.text.clear()
+            val plainText = binding!!.encryptTextEt.text.toString()
+            val key = binding!!.keyEnEt.text.toString()
+            val encryptedText = vigenereEncrypt(plainText, key)
+            binding!!.encryptTv.text = encryptedText
             hideKeyboard()
         }
 
         binding!!.decryptBtn.setOnClickListener {
-            Toast.makeText(this, "Decrypted", Toast.LENGTH_SHORT).show()
-            binding!!.decryptTextEt.text.clear()
-            binding!!.keyDeEt.text.clear()
+            val cipherText = binding!!.decryptTextEt.text.toString()
+            val key = binding!!.keyDeEt.text.toString()
+            val decryptedText = vigenereDecrypt(cipherText, key)
+            binding!!.decryptTv.text = decryptedText
             hideKeyboard()
         }
 
@@ -40,9 +37,35 @@ class MainActivity : AppCompatActivity() {
             copyToClipboard(textToCopy)
         }
         binding!!.copyToClipboardDe.setOnClickListener {
-            val textToCopy = binding!!.encryptTv.text.toString()
+            val textToCopy = binding!!.decryptTv.text.toString()
             copyToClipboard(textToCopy)
         }
+    }
+
+    private fun vigenereEncrypt(plainText: String, key: String): String {
+        val cleanText = plainText.filter { it.isLetter() }
+        val cleanKey = key.filter { it.isLetter() }
+        return cleanText.mapIndexed { index, c ->
+            val offset = cleanKey[index % cleanKey.length].toUpperCase() - 'A'
+            if (c.isUpperCase()) {
+                'A' + (c - 'A' + offset) % 26
+            } else {
+                'a' + (c - 'a' + offset) % 26
+            }
+        }.joinToString("")
+    }
+
+    private fun vigenereDecrypt(cipherText: String, key: String): String {
+        val cleanText = cipherText.filter { it.isLetter() }
+        val cleanKey = key.filter { it.isLetter() }
+        return cleanText.mapIndexed { index, c ->
+            val offset = cleanKey[index % cleanKey.length].toUpperCase() - 'A'
+            if (c.isUpperCase()) {
+                'A' + (c - 'A' - offset + 26) % 26
+            } else {
+                'a' + (c - 'a' - offset + 26) % 26
+            }
+        }.joinToString("")
     }
 
     private fun hideKeyboard() {
@@ -56,7 +79,6 @@ class MainActivity : AppCompatActivity() {
         val clipboardManager = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
         val clipData = ClipData.newPlainText("text", text)
         clipboardManager.setPrimaryClip(clipData)
-        Toast.makeText(this, "Copied", Toast.LENGTH_SHORT).show()
     }
 
     override fun onDestroy() {
