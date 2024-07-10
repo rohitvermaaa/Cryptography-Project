@@ -24,12 +24,14 @@ class MainActivity : AppCompatActivity() {
         binding!!.encryptBtn.setOnClickListener {
             Toast.makeText(this, "Encrypted", Toast.LENGTH_SHORT).show()
             binding!!.encryptTextEt.text.clear()
+            binding!!.keyEnEt.text.clear()
             hideKeyboard()
         }
 
         binding!!.decryptBtn.setOnClickListener {
             Toast.makeText(this, "Decrypted", Toast.LENGTH_SHORT).show()
             binding!!.decryptTextEt.text.clear()
+            binding!!.keyDeEt.text.clear()
             hideKeyboard()
         }
 

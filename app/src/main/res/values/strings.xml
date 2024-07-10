@@ -7,4 +7,5 @@
     <string name="ciphertext">Ciphertext</string>
     <string name="decrypt">Decrypt</string>
     <string name="your_decrypted_text">Your Decrypted Text</string>
+    <string name="key">Key</string>
 </resources>
